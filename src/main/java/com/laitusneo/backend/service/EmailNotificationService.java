@@ -5,6 +5,7 @@ import com.laitusneo.backend.repository.EmailNotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmailNotificationService {
@@ -15,7 +16,7 @@ public class EmailNotificationService {
         this.emailNotificationRepository = emailNotificationRepository;
     }
 
-    public EmailNotification logNotification(EmailNotification notification) {
+    public EmailNotification createNotification(EmailNotification notification) {
         return emailNotificationRepository.save(notification);
     }
 
@@ -23,8 +24,8 @@ public class EmailNotificationService {
         return emailNotificationRepository.findAll();
     }
 
-    public EmailNotification getNotificationById(Long id) {
-        return emailNotificationRepository.findById(id).orElse(null);
+    public Optional<EmailNotification> getNotificationById(Long id) {
+        return emailNotificationRepository.findById(id);
     }
 
     public List<EmailNotification> getNotificationsByRecipient(String recipientEmail) {
