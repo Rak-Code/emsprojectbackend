@@ -31,6 +31,16 @@ public class DepartmentService {
         return departmentRepository.findByName(name).orElse(null);
     }
 
+    public Department updateDepartment(Long id, Department updatedDepartment) {
+        Department department = departmentRepository.findById(id).orElse(null);
+        if (department != null) {
+            if (updatedDepartment.getName() != null) department.setName(updatedDepartment.getName());
+            department.setUpdatedAt(java.time.LocalDateTime.now());
+            return departmentRepository.save(department);
+        }
+        return null;
+    }
+
     public void deleteDepartment(Long id) {
         departmentRepository.deleteById(id);
     }

@@ -41,6 +41,19 @@ public class UserService {
         return userRepository.findByEmail(email).orElse(null);
     }
 
+    public User updateUser(Long id, User updatedUser) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
+            if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
+            if (updatedUser.getRole() != null) user.setRole(updatedUser.getRole());
+            if (updatedUser.getIsActive() != null) user.setIsActive(updatedUser.getIsActive());
+            user.setUpdatedAt(java.time.LocalDateTime.now());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

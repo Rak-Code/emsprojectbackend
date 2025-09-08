@@ -53,4 +53,21 @@ public class LeaveRequestController {
         leaveRequestService.deleteLeaveRequest(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Get Pending Leave Requests (for approval)
+    @GetMapping("/pending")
+    public ResponseEntity<List<LeaveRequest>> getPendingLeaveRequests() {
+        return ResponseEntity.ok(leaveRequestService.getLeaveRequestsByStatus(LeaveRequest.Status.PENDING));
+    }
+
+    // Get Leave Requests by Status
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<LeaveRequest>> getLeaveRequestsByStatus(@PathVariable String status) {
+        try {
+            LeaveRequest.Status statusEnum = LeaveRequest.Status.valueOf(status.toUpperCase());
+            return ResponseEntity.ok(leaveRequestService.getLeaveRequestsByStatus(statusEnum));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

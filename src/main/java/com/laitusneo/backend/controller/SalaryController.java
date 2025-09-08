@@ -61,4 +61,30 @@ public class SalaryController {
         salaryService.deleteSalary(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Calculate salary for employee
+    @GetMapping("/calculate/{employeeId}")
+    public ResponseEntity<?> calculateSalary(@PathVariable Long employeeId) {
+        try {
+            List<Salary> salaries = salaryService.getSalariesByEmployeeId(employeeId);
+            if (salaries.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            // Return the most recent active salary
+            Salary latestSalary = salaries.stream()
+                    .filter(s -> s.getIsActive() != null && s.getIsActive())
+                    .findFirst()
+                    .orElse(salaries.get(0));
+
+            return ResponseEntity.ok(latestSalary);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    // Get active salaries
+    @GetMapping("/active")
+    public ResponseEntity<List<Salary>> getActiveSalaries() {
+        return ResponseEntity.ok(salaryService.getActiveSalaries());
+    }
 }

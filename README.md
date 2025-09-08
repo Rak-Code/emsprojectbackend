@@ -24,7 +24,7 @@ A comprehensive Spring Boot-based REST API for managing employee data, attendanc
 - **ORM**: Spring Data JPA
 - **Documentation**: SpringDoc OpenAPI 2.2.0
 - **Build Tool**: Maven
-- **Additional**: Lombok, BCrypt Password Encoding
+- **Additional**: BCrypt Password Encoding
 
 ## 🛠️ Prerequisites
 

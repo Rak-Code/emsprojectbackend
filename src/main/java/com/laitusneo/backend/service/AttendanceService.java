@@ -21,7 +21,10 @@ public class AttendanceService {
     // Punch In
     public Attendance punchIn(Long employeeId) {
         LocalDate today = LocalDate.now();
-        
+
+        // Check if employee exists
+        // Note: In a real application, you would inject EmployeeRepository and check if employee exists
+
         // Check if already punched in today
         if (attendanceRepository.existsByEmployeeIdAndDate(employeeId, today)) {
             throw new RuntimeException("Employee has already punched in today");

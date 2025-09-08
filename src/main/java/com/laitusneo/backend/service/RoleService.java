@@ -31,6 +31,16 @@ public class RoleService {
         return roleRepository.findByRoleName(name).orElse(null);
     }
 
+    public Role updateRole(Long id, Role updatedRole) {
+        Role role = roleRepository.findById(id).orElse(null);
+        if (role != null) {
+            if (updatedRole.getRoleName() != null) role.setRoleName(updatedRole.getRoleName());
+            role.setUpdatedAt(java.time.LocalDateTime.now());
+            return roleRepository.save(role);
+        }
+        return null;
+    }
+
     public void deleteRole(Long id) {
         roleRepository.deleteById(id);
     }

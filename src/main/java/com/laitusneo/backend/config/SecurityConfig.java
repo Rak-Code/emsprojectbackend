@@ -35,7 +35,8 @@ public class SecurityConfig {
 
                         // Swagger UI and OpenAPI endpoints
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html",
-                                "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                                "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**",
+                                "/swagger-ui/index.html", "/api-docs/**").permitAll()
 
                         // Department & Role Management (Admin only)
                         .requestMatchers("/api/departments/**", "/api/roles/**").hasRole("ADMIN")

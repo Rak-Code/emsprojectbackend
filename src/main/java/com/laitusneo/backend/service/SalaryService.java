@@ -18,7 +18,7 @@ public class SalaryService {
 
     public Salary createSalary(Salary salary) {
         // calculate netSalary manually before saving
-//        salary.setNetSalary(salary.getBaseSalary() + salary.getAllowances() - salary.getDeductions());
+        salary.setNetSalary(salary.getBaseSalary() + salary.getAllowances() - salary.getDeductions());
         return salaryRepository.save(salary);
     }
 

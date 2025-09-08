@@ -21,6 +21,13 @@ public class LeaveRequestService {
     }
 
     public LeaveRequest applyLeave(LeaveRequest leaveRequest) {
+        // Validate leave dates
+        if (leaveRequest.getStartDate().isAfter(leaveRequest.getEndDate())) {
+            throw new RuntimeException("Start date cannot be after end date");
+        }
+        if (leaveRequest.getStartDate().isBefore(java.time.LocalDate.now())) {
+            throw new RuntimeException("Cannot apply leave for past dates");
+        }
         return leaveRequestRepository.save(leaveRequest);
     }
 

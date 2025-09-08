@@ -36,6 +36,13 @@ public class DepartmentController {
         return department != null ? ResponseEntity.ok(department) : ResponseEntity.notFound().build();
     }
 
+    // Update Department
+    @PutMapping("/{id}")
+    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department department) {
+        Department updatedDepartment = departmentService.updateDepartment(id, department);
+        return updatedDepartment != null ? ResponseEntity.ok(updatedDepartment) : ResponseEntity.notFound().build();
+    }
+
     // Delete Department
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {

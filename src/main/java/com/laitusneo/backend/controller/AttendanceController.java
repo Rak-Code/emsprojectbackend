@@ -153,4 +153,62 @@ public class AttendanceController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+
+    // Get attendance report for employee (monthly summary)
+    @GetMapping("/report/employee/{employeeId}")
+    public ResponseEntity<?> getAttendanceReport(
+            @PathVariable Long employeeId,
+            @RequestParam int year,
+            @RequestParam int month) {
+        try {
+            List<Attendance> report = attendanceService.getMonthlyAttendance(employeeId, year, month);
+            return ResponseEntity.ok(report);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    // Get attendance statistics for employee
+    @GetMapping("/stats/employee/{employeeId}")
+    public ResponseEntity<?> getAttendanceStats(
+            @PathVariable Long employeeId,
+            @RequestParam int year,
+            @RequestParam int month) {
+        try {
+            List<Attendance> monthlyAttendance = attendanceService.getMonthlyAttendance(employeeId, year, month);
+            int totalDays = monthlyAttendance.size();
+            int presentDays = (int) monthlyAttendance.stream()
+                    .filter(a -> a.getStatus() == Attendance.AttendanceStatus.PRESENT)
+                    .count();
+            int leaveDays = (int) monthlyAttendance.stream()
+                    .filter(a -> a.getStatus() == Attendance.AttendanceStatus.LEAVE)
+                    .count();
+            int absentDays = totalDays - presentDays - leaveDays;
+
+            return ResponseEntity.ok(new AttendanceStats(totalDays, presentDays, leaveDays, absentDays));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    // Helper class for attendance statistics
+    public static class AttendanceStats {
+        private int totalDays;
+        private int presentDays;
+        private int leaveDays;
+        private int absentDays;
+
+        public AttendanceStats(int totalDays, int presentDays, int leaveDays, int absentDays) {
+            this.totalDays = totalDays;
+            this.presentDays = presentDays;
+            this.leaveDays = leaveDays;
+            this.absentDays = absentDays;
+        }
+
+        // Getters
+        public int getTotalDays() { return totalDays; }
+        public int getPresentDays() { return presentDays; }
+        public int getLeaveDays() { return leaveDays; }
+        public int getAbsentDays() { return absentDays; }
+    }
 }

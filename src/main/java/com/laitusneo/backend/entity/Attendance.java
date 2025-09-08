@@ -1,18 +1,12 @@
 package com.laitusneo.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "attendance")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Attendance {
     
     @Id
@@ -44,6 +38,18 @@ public class Attendance {
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    
+    // Constructors
+    public Attendance() {}
+    
+    public Attendance(Long employeeId, LocalDate date, LocalDateTime punchInTime, LocalDateTime punchOutTime, BigDecimal totalHours, AttendanceStatus status) {
+        this.employeeId = employeeId;
+        this.date = date;
+        this.punchInTime = punchInTime;
+        this.punchOutTime = punchOutTime;
+        this.totalHours = totalHours;
+        this.status = status;
+    }
     
     @PrePersist
     protected void onCreate() {

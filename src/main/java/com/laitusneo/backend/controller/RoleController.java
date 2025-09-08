@@ -36,6 +36,13 @@ public class RoleController {
         return role != null ? ResponseEntity.ok(role) : ResponseEntity.notFound().build();
     }
 
+    // Update Role
+    @PutMapping("/{id}")
+    public ResponseEntity<Role> updateRole(@PathVariable Long id, @RequestBody Role role) {
+        Role updatedRole = roleService.updateRole(id, role);
+        return updatedRole != null ? ResponseEntity.ok(updatedRole) : ResponseEntity.notFound().build();
+    }
+
     // Delete Role
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {

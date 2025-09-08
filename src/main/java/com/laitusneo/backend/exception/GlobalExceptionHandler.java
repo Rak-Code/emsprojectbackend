@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+// Temporarily disabled to resolve ControllerAdviceBean compatibility issue
+// @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
